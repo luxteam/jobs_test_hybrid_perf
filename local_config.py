@@ -10,6 +10,7 @@ analyze_times = {
 }
 show_execution_time = True
 show_performance_tab = True
+show_compare_tab = False
 show_engine_log = False
 tracked_metrics_charts_location = "performance"
 show_time_taken = False
