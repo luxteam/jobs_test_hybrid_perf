@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 120
+exclude =
+    .git,
+    .github,
+    __pycache__,
+    __init__.py,
+    jobs_launcher,
+    Work,
+    *.log,
+extend-ignore =
+    # in some scripts it is required to append some folder in the sys.path before imports
+    E402,
+per-file-ignores =
+    jobs/Scripts/locators.py:E501

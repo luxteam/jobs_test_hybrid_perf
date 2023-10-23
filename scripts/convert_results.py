@@ -1,18 +1,26 @@
 import argparse
 import json
 import os
-import sys
-from glob import glob
 import shutil
+import sys
 from datetime import datetime
+from glob import glob
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from jobs_launcher.core import system_info
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", required=True, type=str, metavar="<path>", help="path to files that should be converted")
-    parser.add_argument("--output", required=True, type=str, metavar="<path>", help="path to converted results")
+    parser.add_argument("--input",
+                        required=True,
+                        type=str,
+                        metavar="<path>",
+                        help="path to files that should be converted")
+    parser.add_argument("--output",
+                        required=True,
+                        type=str,
+                        metavar="<path>",
+                        help="path to converted results")
 
     args = parser.parse_args()
 
@@ -51,7 +59,8 @@ if __name__ == "__main__":
 
             with open(report) as file:
                 metrics = json.load(file)
-                report_name = os.path.split(report)[1].replace(".json", "").replace("_main_camera", "").replace("Report_Reduced_", "")
+                report_name = os.path.split(report)[1].replace(".json", "")
+                report_name = report_name.replace("_main_camera", "").replace("Report_Reduced_", "")
                 info = {"duration": 0.0,
                         "render_duration": 0.0,
                         "execution_time": 0.0,
@@ -90,10 +99,11 @@ if __name__ == "__main__":
 
                     info["total"] += 1
 
-                    current_case["frames_to_skip_in_analysis"] = metrics[metric]["Description"]["frames_to_skip_in_analysis"]
-                    current_case["reduction_type"] = metrics[metric]["Description"]["reduction_type"]
-                    current_case["threshold"] = metrics[metric]["Description"]["threshold"]
-                    current_case["deviation_threshold"] = metrics[metric]["Description"]["deviation_threshold"]
+                    description = metrics[metric]["Description"]
+                    current_case["frames_to_skip_in_analysis"] = description["frames_to_skip_in_analysis"]
+                    current_case["reduction_type"] = description["reduction_type"]
+                    current_case["threshold"] = description["threshold"]
+                    current_case["deviation_threshold"] = description["deviation_threshold"]
 
                     current_case["baseline_value"] = metrics[metric]["Reference_value"]
                     current_case["baseline_value_samples_taken"] = metrics[metric]["Reference_value_samples_taken"]
@@ -120,4 +130,7 @@ if __name__ == "__main__":
 
         # save all converted results in session_report.json
         with open(os.path.join(root_dir, "session_report.json"), "w", encoding="utf8") as file:
-            json.dump({"machine_info": machine_info, "results": results, "summary": summary}, file, indent=4, sort_keys=True)
+            json.dump({"machine_info": machine_info, "results": results, "summary": summary},
+                      file,
+                      indent=4,
+                      sort_keys=True)

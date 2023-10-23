@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "jobs_test_hybrid_perf"
+version = "1.0.0"
+description = "Autotests for performance measurement of HybridPro"
+authors = ["Luxoft GEMS"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "6.0.0"
+isort = "5.12.0"
+pre-commit = "2.21.0"
+black = "22.12.0"
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
