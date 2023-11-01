@@ -62,8 +62,9 @@ if __name__ == "__main__":
                     groups[scenario]["summary"]["baseline"] = True
             else:
                 for scenario in args.scenarios.split(","):
-                    if scenario in groups:
-                        groups[scenario]["summary"]["baseline"] = True
+                    scenario_name = scenario.replace(".json", "")
+                    if scenario_name in groups:
+                        groups[scenario_name]["summary"]["baseline"] = True
 
     with open(baseline_history_file, "w") as file:
         json.dump(baseline_content, file, indent=4, sort_keys=True)
