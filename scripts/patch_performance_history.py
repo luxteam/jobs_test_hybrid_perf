@@ -101,8 +101,9 @@ if __name__ == "__main__":
                                 del content["data"][formatted_platform_name]
                         else:
                             for scenario in args.scenarios.split(","):
-                                if scenario in groups:
-                                    del groups[scenario]
+                                scenario_name = scenario.replace(".json", "")
+                                if scenario_name in groups:
+                                    del groups[scenario_name]
 
             with open(tracked_metrics_file, "w") as file:
                 json.dump(content, file, indent=4, sort_keys=True)
