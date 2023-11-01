@@ -78,8 +78,6 @@ if __name__ == "__main__":
         )
 
         for tracked_metrics_file in tracked_metrics_files:
-            print(tracked_metrics_file)
-            print(baseline_history_file)
             if tracked_metrics_file == baseline_history_file:
                 break
 
@@ -94,7 +92,7 @@ if __name__ == "__main__":
                         platform_name = PLATFORM_CONVERTATIONS[raw_os_name]["cards"][raw_platform_name]
                         formatted_platform_name = f"{platform_name} {os_name}"
 
-                        groups = baseline_content["data"][formatted_platform_name]["groups"]
+                        groups = content["data"][formatted_platform_name]["groups"]
 
                         if args.scenarios == "all":
                             if formatted_platform_name in content["data"]:
