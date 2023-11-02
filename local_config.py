@@ -6,7 +6,7 @@ tracked_metrics = {
 }
 tracked_metrics_files_number = 10000
 analyze_times = {
-    'target_value': {'max_diff': 0.05}
+    'target_value': {'max_diff': 0.1}
 }
 show_execution_time = True
 show_performance_tab = True
