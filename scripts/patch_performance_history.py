@@ -62,8 +62,9 @@ if __name__ == "__main__":
                     groups[scenario]["summary"]["baseline"] = True
             else:
                 for scenario in args.scenarios.split(","):
-                    if scenario in groups:
-                        groups[scenario]["summary"]["baseline"] = True
+                    scenario_name = scenario.replace(".json", "")
+                    if scenario_name in groups:
+                        groups[scenario_name]["summary"]["baseline"] = True
 
     with open(baseline_history_file, "w") as file:
         json.dump(baseline_content, file, indent=4, sort_keys=True)
@@ -77,8 +78,6 @@ if __name__ == "__main__":
         )
 
         for tracked_metrics_file in tracked_metrics_files:
-            print(tracked_metrics_file)
-            print(baseline_history_file)
             if tracked_metrics_file == baseline_history_file:
                 break
 
@@ -93,15 +92,16 @@ if __name__ == "__main__":
                         platform_name = PLATFORM_CONVERTATIONS[raw_os_name]["cards"][raw_platform_name]
                         formatted_platform_name = f"{platform_name} {os_name}"
 
-                        groups = baseline_content["data"][formatted_platform_name]["groups"]
+                        groups = content["data"][formatted_platform_name]["groups"]
 
                         if args.scenarios == "all":
                             if formatted_platform_name in content["data"]:
                                 del content["data"][formatted_platform_name]
                         else:
                             for scenario in args.scenarios.split(","):
-                                if scenario in groups:
-                                    del groups[scenario]
+                                scenario_name = scenario.replace(".json", "")
+                                if scenario_name in groups:
+                                    del groups[scenario_name]
 
             with open(tracked_metrics_file, "w") as file:
                 json.dump(content, file, indent=4, sort_keys=True)
